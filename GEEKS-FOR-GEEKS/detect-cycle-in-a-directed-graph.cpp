@@ -1,3 +1,5 @@
+// DFS-METHOD !!
+
 class Solution
 {
 private:
@@ -30,5 +32,45 @@ public:
                     return true;
         }
         return false;
+    }
+};
+
+
+
+// BFS-METHOD !!
+
+class Solution
+{
+public:
+    bool isCyclic(int V, vector<int> adj[])
+    {
+        int inDeg[V] = {0};
+        for (int i = 0; i < V; i++)
+        {
+            for (auto it : adj[i])
+                inDeg[it]++;
+        }
+        queue<int> q;
+        for (int i = 0; i < V; i++)
+        {
+            if (inDeg[i] == 0)
+                q.push(i);
+        }
+        int cnt = 0;
+        while (q.size())
+        {
+            int node = q.front();
+            q.pop();
+            cnt++;
+            for (auto it : adj[node])
+            {
+                inDeg[it]--;
+                if (inDeg[it] == 0)
+                    q.push(it);
+            }
+        }
+        if (cnt == V)
+            return false;
+        return true;
     }
 };

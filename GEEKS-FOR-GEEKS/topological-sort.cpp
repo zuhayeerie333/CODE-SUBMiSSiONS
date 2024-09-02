@@ -1,3 +1,5 @@
+// DFS-METHOD !!
+
 class Solution
 {
 private:
@@ -26,6 +28,44 @@ public:
         {
             res.push_back(st.top());
             st.pop();
+        }
+        return res;
+    }
+};
+
+
+
+// BFS-METHOD !!
+
+class Solution
+{
+public:
+    vector<int> topoSort(int V, vector<int> adj[])
+    {
+        int inDeg[V] = {0};
+        for (int i = 0; i < V; i++)
+        {
+            for (auto it : adj[i])
+                inDeg[it]++;
+        }
+        queue<int> q;
+        for (int i = 0; i < V; i++)
+        {
+            if (inDeg[i] == 0)
+                q.push(i);
+        }
+        vector<int> res;
+        while (q.size())
+        {
+            int node = q.front();
+            q.pop();
+            res.push_back(node);
+            for (auto it : adj[node])
+            {
+                inDeg[it]--;
+                if (inDeg[it] == 0)
+                    q.push(it);
+            }
         }
         return res;
     }
